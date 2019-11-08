@@ -3,4 +3,7 @@ import peewee as pw
 
 
 class User(BaseModel):
-    name = pw.CharField(unique=False)
+    username = pw.CharField(null=False, unique=True)
+    email = pw.CharField(null=False, unique=True)
+    password = pw.CharField(null=False)
+
