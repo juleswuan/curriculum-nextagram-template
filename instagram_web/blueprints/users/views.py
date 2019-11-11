@@ -23,9 +23,11 @@ def create():
     user = User(username=username, email=email, password=password) 
 
     if user.save():
+        print(user.username)
         flash('New user has been added!')
         return redirect(url_for('users.new'))
     else: 
+        print(user.errors)
         for error in user.errors:
             flash(error)
         return render_template ('users/new.html', username=username, email=email, password=password)
