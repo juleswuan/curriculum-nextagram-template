@@ -23,11 +23,9 @@ def create():
         match = check_password_hash(user.password, password)
 
         if match:
-            #login user
-            
-            #flash success msg
-            #return redirect
-            pass
+            #login user           
+            flash("It's a match")
+            return redirect(url_for('create'))
         else:
             flash('Wrong password')
             return render_template('sign-in.html')

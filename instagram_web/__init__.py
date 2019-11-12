@@ -17,9 +17,9 @@ app.register_blueprint(sessions_blueprint, url_prefix="/sessions")
 def internal_server_error(e):
     return render_template('500.html'), 500
 
-@app.errorhandler(CSRFError)
-def handle_csrf_error(e):
-    return render_template('csrf_error.html', reason=e.description), 400
+# @app.errorhandler(CSRFError)
+# def handle_csrf_error(e):
+#     return render_template('csrf_error.html', reason=e.description), 400
 
 @app.route("/")
 def home():
