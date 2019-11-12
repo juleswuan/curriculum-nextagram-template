@@ -4,8 +4,8 @@
 
 <form action="{{ url_for('sessions.create') }}" method="POST">
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-  <label for="name">Username</label>
-  <input type="text" name="name" placeholder="" />
+  <label for="email">Email</label>
+  <input type="text" name="email" placeholder="" />
   <label for="password">Password</label>
   <input type="text" name="password" placeholder="" />
   <label><a href="#">Forgot password?</a></label>
