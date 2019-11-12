@@ -19,17 +19,17 @@ def create():
     email = request.form.get('email')
     password = request.form.get('password')
     # check user exists
-    current_user = User.get_or_none(email=email)
-    if current_user:
+    user = User.get_or_none(email=email)
+    if user:
         # check password match
-        match = check_password_hash(current_user.password, password)
+        match = check_password_hash(user.password, password)
 
         if match:
             #login user 
-            # session['user_id'] = current_user.id 
-            login_user(current_user)    
+            # session['user_id'] = user.id 
+            login_user(user)    
             flash("Successfully signed in!")
-            return redirect(url_for('users.index'))
+            return redirect(url_for('sessions.new')) # should redirect to homepage 
         else:
             flash('Wrong password')
             return render_template('sign-in.html')

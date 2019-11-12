@@ -1,4 +1,4 @@
-import flask_login
+from flask_login import UserMixin
 from models.base_model import BaseModel
 import peewee as pw
 import re
