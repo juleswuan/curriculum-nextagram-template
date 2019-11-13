@@ -40,7 +40,11 @@ def create():
 # user profile page
 @users_blueprint.route('/<username>', methods=["GET"])
 def show(username):
-    return render_template('users/profile.html', username=username)
+    user = User.select().where(User.username == username).get()
+
+    print(user.profile_image_url)
+    
+    return render_template('users/profile.html', user=user)
 
 
 # homepage / all users feed
@@ -78,8 +82,10 @@ def update_profile_img(id):
         else:
             # get current user
             # save profile image link 
+            user = User.update(profile_image = output).where(User.id == current_user.id)
+            user.execute()
             flash(f'Successfully uploaded {file.filename}', 'success')
-            return redirect(url_for('users.edit', id=id))
+            return redirect(url_for('users.show', username=current_user.username))
         
 
 # update user details

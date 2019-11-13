@@ -22,7 +22,7 @@ def upload_file_to_s3(file, acl="public-read"):
                 "ContentType": file.content_type
             }
         )
-        return f"{ Config.S3_LOCATION } { file.filename }"
+        return f"{ file.filename }"
 
     except Exception as e:
         # This is a catch all exception, edit this part to fit your needs.

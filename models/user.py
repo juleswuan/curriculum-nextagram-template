@@ -1,3 +1,4 @@
+from config import Config
 from flask_login import UserMixin
 from models.base_model import BaseModel
 import peewee as pw
@@ -10,6 +11,7 @@ class User(UserMixin, BaseModel):
     username = pw.CharField(null=False, unique=True)
     email = pw.CharField(null=False, unique=True)
     password = pw.CharField(null=False)
+    profile_image = pw.TextField(null=True)
 
     def is_authenticated(self):
         return True
@@ -47,5 +49,8 @@ class User(UserMixin, BaseModel):
     # class method
 
     # add hybrid_property func decorator
+    @hybrid_property
+    def profile_image_url(self):
+        return Config.S3_LOCATION + self.profile_image
 
         
