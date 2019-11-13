@@ -3,9 +3,10 @@ from models.base_model import BaseModel
 import peewee as pw
 import re
 from werkzeug.security import generate_password_hash
+from playhouse.hybrid import hybrid_property
 
 
-class User(BaseModel):
+class User(UserMixin, BaseModel):
     username = pw.CharField(null=False, unique=True)
     email = pw.CharField(null=False, unique=True)
     password = pw.CharField(null=False)
@@ -42,4 +43,9 @@ class User(BaseModel):
             self.errors.append('Password must be between 8-20 chars')
         else:
             self.password = generate_password_hash(self.password)
+
+    # class method
+
+    # add hybrid_property func decorator
+
         

@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+from flask_login import login_required
 from models.user import User
 from werkzeug.security import check_password_hash
-from flask_login import login_user
+from flask_login import login_user, logout_user
 
 
 sessions_blueprint = Blueprint('sessions',
@@ -28,11 +29,19 @@ def create():
             #login user 
             # session['user_id'] = user.id 
             login_user(user)    
-            flash("Successfully signed in!")
-            return redirect(url_for('sessions.new')) # should redirect to homepage 
+            flash("Successfully signed in", 'success')
+            return redirect(url_for('sessions.create')) # should redirect to homepage 
         else:
-            flash('Wrong password')
+            flash('Wrong password', 'danger')
             return render_template('sign-in.html')
     else:
         flash('No user found')
         return render_template('sign-in.html')
+
+# sign out 
+@sessions_blueprint.route('/delete', methods=['POST'])
+@login_required
+def destroy():
+    logout_user()
+    flash ('Successfully signed out', 'success')
+    return redirect(url_for('sessions.new'))

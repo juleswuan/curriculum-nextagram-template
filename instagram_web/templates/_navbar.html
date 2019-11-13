@@ -13,29 +13,54 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link" href="#">Home</a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="{{ url_for('users.new') }}">Sign Up</a>
+      {% if current_user.is_authenticated %}
+      <li class="nav-item">
+        <form action="{{ url_for('sessions.destroy') }}" method="POST">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+          <input style="background-color: rgba(240, 248, 255, 0); outline: none"
+          class="nav-link" type="submit" value="Sign Out" / >
+        </form>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="{{ url_for('sessions.new') }}">Sign In</a>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          href="{{ url_for('users.show', username=current_user.username) }}"
+          >My Profile</a
+        >
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Sign Out</a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Profile</a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="{{ url_for('users.edit', id=user.id) }}"
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          href="{{ url_for('users.edit', id=current_user.id) }}"
           >Edit</a
         >
       </li>
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link" href="#">Upload</a>
       </li>
+      <li>
+        <a class="nav-link" href="#">
+          <img
+            src="/instagram_web/static/images/profile_icon.png"
+            width="30"
+            height="30"
+            class="d-inline-block align-top"
+            alt=""
+          />
+          Hi, {{ current_user.username }}
+        </a>
+      </li>
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('sessions.new') }}">Sign In</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('users.new') }}">Sign Up</a>
+      </li>
+      {% endif %}
     </ul>
   </div>
 </nav>
