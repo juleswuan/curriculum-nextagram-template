@@ -59,7 +59,7 @@
     </div>
     <div class="col-md-6 login-form-2">
       <h3>Update My Details</h3>
-      <br>
+      <br />
       <form action="{{ url_for('users.update', id=user.id) }}" method="POST">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
         <div class="form-group">

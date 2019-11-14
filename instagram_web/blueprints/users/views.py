@@ -66,9 +66,10 @@ def edit(id):
 
 # upload profile image
 @users_blueprint.route('/<id>', methods=['POST'])
+@login_required
 def update_profile_img(id):
 	# get a file from request
-    file = request.files["user_file"]
+    file = request.files['user_file']
 	# if no file in request (user submit on empty form)
     if not file:
         flash("Please select a file", 'danger')
