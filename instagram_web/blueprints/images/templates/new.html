@@ -1,0 +1,40 @@
+{% extends '_layout.html' %} {% block content %}
+
+<div class="row">
+  <div class="col-lg-5 mx-auto">
+    <div class="p-5 bg-white shadow rounded-lg">
+      <img
+        src="https://res.cloudinary.com/mhmd/image/upload/v1557366994/img_epm3iz.png"
+        alt=""
+        width="200"
+        class="d-block mx-auto mb-4 rounded-pill"
+      />
+      <h3 class="text-center mb-4">
+        Upload An Image
+      </h3>
+      <form
+        action="{{url_for('users.update_profile_img', id=current_user.id)}}"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <div class="custom-file overflow-hidden rounded-pill mb-5">
+          <input
+            id="customFile"
+            type="file"
+            name="image_file"
+            class="custom-file-input rounded-pill"
+          />
+          <label for="customFile" class="custom-file-label rounded-pill"
+            >Choose file</label
+          >
+        </div>
+        <button type="submit" class="btn btn-primary btn-block rounded-pill">
+          Upload
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
