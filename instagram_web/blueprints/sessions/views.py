@@ -14,6 +14,7 @@ sessions_blueprint = Blueprint('sessions',
 def new():
     return render_template('sign-in.html')
 
+# sign in user
 @sessions_blueprint.route('/', methods=['POST'])
 def create():
     # get email (unique) + password
@@ -35,10 +36,10 @@ def create():
             flash('Wrong password', 'danger')
             return render_template('sign-in.html')
     else:
-        flash('No user found')
+        flash('No user found', 'danger')
         return render_template('sign-in.html')
 
-# sign out 
+# sign out current user
 @sessions_blueprint.route('/delete', methods=['POST'])
 @login_required
 def destroy():

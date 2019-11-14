@@ -50,7 +50,8 @@ def show(username):
 # homepage / all users feed
 @users_blueprint.route('/', methods=["GET"])
 def index():
-    return "USERS"
+    user = User.select()
+    return render_template ('home.html', user=user)
 
 
 @users_blueprint.route('/<id>/edit', methods=['GET'])

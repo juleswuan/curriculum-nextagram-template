@@ -11,7 +11,7 @@ class User(UserMixin, BaseModel):
     username = pw.CharField(null=False, unique=True)
     email = pw.CharField(null=False, unique=True)
     password = pw.CharField(null=False)
-    profile_image = pw.TextField(null=True)
+    profile_image = pw.TextField(default="placeholder_icon.png")
 
     def is_authenticated(self):
         return True
