@@ -23,9 +23,9 @@ login_manager.login_message_category = "warning"
 
 gateway = BraintreeGateway(Configuration(
         Environment.Sandbox,
-        merchant_id=os.getenv("ID"),
-        public_key=os.getenv("KEY"),
-        private_key=os.getenv("SECRET")
+        merchant_id=os.getenv("MERCHANT_ID"),
+        public_key=os.getenv("PUBLIC_KEY"),
+        private_key=os.getenv("PRIVATE_KEY")
     ))
 
 if os.getenv('FLASK_ENV') == 'production':

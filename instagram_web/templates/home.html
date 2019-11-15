@@ -15,7 +15,12 @@
           class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm"
         />
         <h5 class="mb-0">{{ user.username }}</h5>
-        <span class="small text-uppercase text-muted">SEE MORE</span>
+        <a
+          class="btn btn-link"
+          href="{{ url_for ('users.show', username = user.username) }}"
+          ><span class="small text-uppercase text-muted">SEE MORE</span></a
+        >
+
         {% for image in user.images[:1] %}
         <div style="margin-top: 10px">
           <img src="{{ image.image_url }}" alt="" class="img-fluid" />

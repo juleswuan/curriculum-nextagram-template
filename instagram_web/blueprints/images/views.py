@@ -51,11 +51,3 @@ def delete(id):
 def show(id):
     user = User[current_user.id]
     return render_template('users/profile.html', user=user)
-
-# display all user's images
-@images_blueprint.route('/', methods=['GET'])
-@login_required
-def index():
-    users = User.select()
-    images = Image.select().where(Image.user << users)
-    return render_template('home.html', users=users, images=images)

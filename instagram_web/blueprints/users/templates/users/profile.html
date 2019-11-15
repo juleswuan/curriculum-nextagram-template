@@ -17,9 +17,11 @@
           {% for image in user.images %}
         <li class="list-group-item">
           <div class="media align-items-lg-center flex-column flex-lg-row p-3">
-            <form action="" method="">
-                <button type="submit" class="btn btn-primary">Donate</button>
-            </form>            
+            <!-- <form action="{{ url_for('payments.new', username=user.username)}}" method="GET"> -->
+            <a href="{{ url_for('payments.new', username=user.username)}}">
+              <button type="submit" class="btn btn-primary">Donate</button>
+            </a>  
+            <!-- </form>             -->
             <img src="{{ image.image_url }}" width="50%" class="ml-lg-5 order-1 order-lg-2">
           </div>
         </li>

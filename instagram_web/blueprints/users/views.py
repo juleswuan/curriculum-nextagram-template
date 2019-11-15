@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
+from models.image import Image
 from models.user import User
 from werkzeug.security import generate_password_hash 
 from werkzeug.utils import secure_filename
@@ -42,17 +43,16 @@ def create():
 def show(username):
     user = User.select().where(User.username == username).get()
 
-    print(user.profile_image_url)
-    
     return render_template('users/profile.html', user=user)
 
 
 # homepage / all users feed
 @users_blueprint.route('/', methods=["GET"])
+@login_required
 def index():
-    # user = User.select()
-    # return render_template ('home.html', user=user)
-    return render_template('home.html')
+    users = User.select()
+    images = Image.select().where(Image.user << users)
+    return render_template('home.html', users=users, images=images)
 
 
 @users_blueprint.route('/<id>/edit', methods=['GET'])
