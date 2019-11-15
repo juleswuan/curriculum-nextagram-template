@@ -4,7 +4,7 @@
 <div class="container">
   <div class="row text-center">
     <!-- Team item -->
-    {% for user in user %}
+    {% for user in users %}
     <div class="col-xl-3 col-sm-6 mb-5">
       <div class="bg-white rounded shadow-sm py-5 px-4">
         <img
@@ -16,7 +16,11 @@
         />
         <h5 class="mb-0">{{ user.username }}</h5>
         <span class="small text-uppercase text-muted">SEE MORE</span>
-        <!-- display uploaded images here -->
+        {% for image in user.images[:1] %}
+        <div style="margin-top: 10px">
+          <img src="{{ image.image_url }}" alt="" class="img-fluid" />
+        </div>
+        {% endfor %}
       </div>
     </div>
     {% endfor %}

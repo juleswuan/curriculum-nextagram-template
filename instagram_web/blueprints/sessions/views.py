@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
-from flask_login import login_required
+from flask_login import login_required, login_user, logout_user
 from models.user import User
 from werkzeug.security import check_password_hash
-from flask_login import login_user, logout_user
+from instagram_web.util.google_oauth import oauth
 
 
 sessions_blueprint = Blueprint('sessions',
@@ -31,13 +31,37 @@ def create():
             # session['user_id'] = user.id 
             login_user(user)    
             flash("Successfully signed in", 'success')
-            return redirect(url_for('users.index')) # should redirect to homepage 
+            return redirect(url_for('images.index')) # should redirect to homepage 
         else:
             flash('Wrong password', 'danger')
             return render_template('sign-in.html')
     else:
         flash('No user found', 'danger')
         return render_template('sign-in.html')
+
+# google login (sends to google)
+@sessions_blueprint.route('/login/google', methods=['GET'])
+def google_login():
+    redirect_url = url_for('sessions.authorize_google', _external=True)
+    return oauth.google.authorize_redirect(redirect_url)
+
+# allows login (returns from google)
+@sessions_blueprint.route('/authorize/google', methods=['GET'])
+def authorize_google():
+    token = oauth.google.authorize_access_token()
+    if not token:
+        flash('error - token', 'danger')
+        return render_template('sign-in.html')
+    email = oauth.google.get('https://www.googleapis.com/oauth2/v2/userinfo').json()['email']
+    # check if user exists in db
+    user = User.get_or_none(User.email == email)
+    if not user:
+        flash ('error - user', 'danger')
+        return render_template('sign-in.html')
+    else:
+        flash('Welcome')
+        login_user(user)
+        return redirect(url_for('users.index'))
 
 # sign out current user
 @sessions_blueprint.route('/delete', methods=['POST'])

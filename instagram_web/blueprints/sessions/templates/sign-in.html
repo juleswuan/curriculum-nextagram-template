@@ -1,15 +1,5 @@
 {% extends '_layout.html' %} {% block content %}
 
-<!-- <form action="{{ url_for('sessions.create') }}" method="POST">
-  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-  <label for="email">Email</label>
-  <input type="text" name="email" placeholder="" />
-  <label for="password">Password</label>
-  <input type="text" name="password" placeholder="" />
-  <label><a href="#">Forgot password?</a></label>
-  <input type="submit" value="Sign In" />
-</form> -->
-
 <div class="container-fluid">
   <div class="row no-gutter">
     <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
@@ -42,17 +32,6 @@
                     placeholder="Password"
                   />
                 </div>
-
-                <!-- <div class="custom-control custom-checkbox mb-3">
-                  <input
-                    type="checkbox"
-                    class="custom-control-input"
-                    id="customCheck1"
-                  />
-                  <label class="custom-control-label" for="customCheck1"
-                    >Remember password</label
-                  >
-                </div> -->
                 <button
                   class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2"
                   type="submit"
@@ -61,6 +40,14 @@
                 </button>
                 <div class="text-center">
                   <a class="small" href="#">Forgot password?</a>
+                </div>
+                <br />
+                <div>
+                  <a
+                    href="{{ url_for('sessions.google_login')}}"
+                    class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2"
+                    >Sign in with Google</a
+                  >
                 </div>
               </form>
             </div>

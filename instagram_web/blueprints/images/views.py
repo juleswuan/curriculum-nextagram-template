@@ -15,6 +15,7 @@ images_blueprint = Blueprint('images',
 def new():
     return render_template('new.html')
 
+# upload image
 @images_blueprint.route('/', methods=['POST'])
 @login_required
 def create():
@@ -34,7 +35,15 @@ def create():
             image = Image(image_path=output, user=user)
             image.save()
             flash(f'Successfully uploaded {file.filename}', 'success')
-            return redirect(url_for('images.new'))
+            return redirect(url_for('images.show'))
+
+# delete image
+@images_blueprint.route('/<id>/delete', methods=['POST'])
+@login_required
+def delete(id):
+    image = Image.get_by_id(id)
+    image.delete_instance()
+    return redirect(url_for('images.show'))
 
 # display a specific user's images
 @images_blueprint.route('/<id>', methods=['GET'])
@@ -46,7 +55,7 @@ def show(id):
 # display all user's images
 @images_blueprint.route('/', methods=['GET'])
 @login_required
-def index(id):
+def index():
     users = User.select()
     images = Image.select().where(Image.user << users)
     return render_template('home.html', users=users, images=images)

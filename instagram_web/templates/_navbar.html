@@ -15,7 +15,7 @@
     <ul class="navbar-nav">
       {% if current_user.is_authenticated %}
       <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('users.index') }}">Home</a>
+        <a class="nav-link" href="{{ url_for('images.index') }}">Home</a>
       </li>
       <li class="nav-item">
         <form action="{{ url_for('sessions.destroy') }}" method="POST">

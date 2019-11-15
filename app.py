@@ -1,10 +1,11 @@
-import os
+from braintree import BraintreeGateway, Configuration, Environment
 import config
 from flask import Flask
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect
 from models.base_model import db
 from models.user import User
+import os
 
 
 web_dir = os.path.join(os.path.dirname(
@@ -20,6 +21,12 @@ login_manager.login_view = "sessions.new"
 login_manager.login_message = "Please log in before proceeding."
 login_manager.login_message_category = "warning"
 
+gateway = BraintreeGateway(Configuration(
+        Environment.Sandbox,
+        merchant_id=os.getenv("ID"),
+        public_key=os.getenv("KEY"),
+        private_key=os.getenv("SECRET")
+    ))
 
 if os.getenv('FLASK_ENV') == 'production':
     app.config.from_object("config.ProductionConfig")

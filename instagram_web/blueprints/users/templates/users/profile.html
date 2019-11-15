@@ -1,20 +1,15 @@
 {% extends '_layout.html' %} {% block content %}
 
-<img
-  src="{{ user.profile_image_url }}"
-  alt="profile_image"
-  class="rounded-pill"
-  style="width:200px; height:200px"
-/>
+<div>
+    <img
+    src="{{ user.profile_image_url }}"
+    alt="profile_image"
+    class="rounded-pill shadow-sm"
+    style="width:200px; height:200px"
+  />
+</div>
+
 <h3>I am {{ user.username }}</h3>
-<!-- <ul>
-    {% for image in user.images %}
-    <li>
-      <img src="{{ image.image_url }}">
-      <button type="submit" class="btn btn-primary">Donate</button>
-    </li>
-{% endfor %}
-</ul> -->
 
 <div class="row">
     <div class="col-lg-8 mx-auto">
@@ -22,7 +17,9 @@
           {% for image in user.images %}
         <li class="list-group-item">
           <div class="media align-items-lg-center flex-column flex-lg-row p-3">
-              <button type="submit" class="btn btn-primary">Donate</button>
+            <form action="" method="">
+                <button type="submit" class="btn btn-primary">Donate</button>
+            </form>            
             <img src="{{ image.image_url }}" width="50%" class="ml-lg-5 order-1 order-lg-2">
           </div>
         </li>
@@ -31,4 +28,5 @@
     </div>
   </div>
 </div>
+
 {% endblock %}
