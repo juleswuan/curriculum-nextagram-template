@@ -35,7 +35,7 @@ def create():
             image = Image(image_path=output, user=user)
             image.save()
             flash(f'Successfully uploaded {file.filename}', 'success')
-            return redirect(url_for('images.show'))
+            return redirect(url_for('users.show', username=user.username))
 
 # delete image
 @images_blueprint.route('/<id>/delete', methods=['POST'])

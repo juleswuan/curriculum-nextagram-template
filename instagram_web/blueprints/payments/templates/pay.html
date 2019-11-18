@@ -28,9 +28,6 @@
         instance.requestPaymentMethod(function(err, payload) {
           input.value = payload.nonce;
           pForm.submit();
-          // // Add the nonce to the form and submit
-          // document.querySelector("#nonce").value = payload.nonce;
-          // form.submit();
         });
       };
     }

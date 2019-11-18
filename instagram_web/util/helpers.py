@@ -1,5 +1,6 @@
 import boto3, botocore
 from config import Config
+import datetime
 import os
 
 s3 = boto3.client(
@@ -10,7 +11,8 @@ s3 = boto3.client(
 
 def upload_file_to_s3(file, acl="public-read"):
     # acl = access control list (manage access to buckets and objects)
-
+    prefix = datetime.datetime.now().strftime("%y%m%d-%H%M%S")
+    file.filename = "-".join([prefix, file.filename])
     try:
 
         s3.upload_fileobj(
@@ -22,6 +24,7 @@ def upload_file_to_s3(file, acl="public-read"):
                 "ContentType": file.content_type
             }
         )
+
         return f"{ file.filename }"
 
     except Exception as e:
@@ -33,3 +36,5 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
