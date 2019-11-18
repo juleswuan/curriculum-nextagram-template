@@ -47,7 +47,6 @@ class User(UserMixin, BaseModel):
         else:
             self.password = generate_password_hash(self.password)
 
-    # class method
 
     # add hybrid_property func decorator
     @hybrid_property

@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 from models.image import Image
 from models.user import User
+from models.follower import Follower
 from werkzeug.security import generate_password_hash 
 from werkzeug.utils import secure_filename
 from instagram_web.util.helpers import upload_file_to_s3, allowed_file
@@ -42,7 +43,6 @@ def create():
 @users_blueprint.route('/<username>', methods=["GET"])
 def show(username):
     user = User.select().where(User.username == username).get()
-
     return render_template('users/profile.html', user=user)
 
 
@@ -109,4 +109,16 @@ def update(id):
     else:
         flash(f"Not allowed to update {user.username}'s profile'")
         return render_template('users/edit.html', user=user)
+
+# follow user
+@users_blueprint.route('/follow/<username>', methods=["POST"])
+@login_required
+def follow(username):
+    idol_id = request.form.get('idol_id')
+    f = Follower(fan=current_user.id, idol=idol_id)
+    idol = User.get_by_id(idol_id)
+    f.save()
+    flash(f'You are now following {idol.username}', 'success')
+    return redirect (url_for('users.show', username=idol.username))
+
 

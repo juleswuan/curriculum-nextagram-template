@@ -31,7 +31,7 @@ def create():
             # session['user_id'] = user.id 
             login_user(user)    
             flash("Successfully signed in", 'success')
-            return redirect(url_for('users.index')) # should redirect to homepage 
+            return redirect(url_for('users.index')) # redirect to homepage 
         else:
             flash('Wrong password', 'danger')
             return render_template('sign-in.html')
