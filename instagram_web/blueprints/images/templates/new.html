@@ -1,19 +1,6 @@
 {% extends '_layout.html' %} {% block content %}
 
-<h1>Upload An Image</h1>
-<br />
-<form
-  action="{{url_for('images.create', id=current_user.id)}}"
-  method="POST"
-  enctype="multipart/form-data"
->
-  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-  <input type="file" name="image_file" />
-  <br />
-  <button type="submit">Upload</button>
-</form>
-
-<!-- <div class="row">
+<div class="row">
   <div class="col-lg-5 mx-auto">
     <div class="p-5 bg-white shadow rounded-lg">
       <img
@@ -31,16 +18,8 @@
         enctype="multipart/form-data"
       >
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-        <div class="custom-file overflow-hidden rounded-pill mb-5">
-          <input
-            id="customFile"
-            type="file"
-            name="image_file"
-            class="custom-file-input rounded-pill"
-          />
-          <label for="customFile" class="custom-file-label rounded-pill"
-            >Choose file</label
-          >
+        <div class="rounded-pill mb-4">
+          <input type="file" name="image_file" />
         </div>
         <button type="submit" class="btn btn-primary btn-block rounded-pill">
           Upload
@@ -48,6 +27,6 @@
       </form>
     </div>
   </div>
-</div> -->
+</div>
 
 {% endblock %}
