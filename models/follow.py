@@ -2,7 +2,10 @@ from models.base_model import BaseModel
 from models.user import User
 import peewee as pw
 
-class Follower(BaseModel):
+class Follow(BaseModel):
     fan = pw.ForeignKeyField(User, backref='idols')
     idol = pw.ForeignKeyField(User, backref='fans')
     approved = pw.BooleanField(default=False)
+
+    def is_approved(self):
+        return True

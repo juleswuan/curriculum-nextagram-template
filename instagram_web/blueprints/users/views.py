@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 from models.image import Image
 from models.user import User
-from models.follower import Follower
+from models.follow import Follow
 from werkzeug.security import generate_password_hash 
 from werkzeug.utils import secure_filename
 from instagram_web.util.helpers import upload_file_to_s3, allowed_file
@@ -43,6 +43,7 @@ def create():
 @users_blueprint.route('/<username>', methods=["GET"])
 def show(username):
     user = User.select().where(User.username == username).get()
+    # code to check if user is an idol who has approved me (fan)
     return render_template('users/profile.html', user=user)
 
 
@@ -66,7 +67,7 @@ def edit(id):
         return render_template('users/edit.html', user=current_user)
 
 # upload profile image
-@users_blueprint.route('/<id>', methods=['POST'])
+@users_blueprint.route('/profile/<id>', methods=['POST'])
 @login_required
 def update_profile_img(id):
 	# get a file from request
@@ -92,7 +93,7 @@ def update_profile_img(id):
         
 
 # update user details
-@users_blueprint.route('/<id>', methods=['POST'])
+@users_blueprint.route('/update/<id>', methods=['POST'])
 @login_required
 def update(id):
     user = User[id]
@@ -107,15 +108,34 @@ def update(id):
             flash('Unable to update profile', 'danger')
             return render_template('users/edit.html', user=user)
     else:
-        flash(f"Not allowed to update {user.username}'s profile'")
+        flash(f"Not allowed to update {user.username}'s profile", 'danger')
         return render_template('users/edit.html', user=user)
+
+
+# make account private
+@users_blueprint.route('/private/<id>', methods=['POST'])
+@login_required
+def make_private(id):
+    user = User[id]
+    if current_user == user:
+        user.is_private = True
+        if user.save():
+            flash ('Account setting updated', 'success')
+            return redirect (url_for('users.edit', id=id))
+        else:
+            flash('Unable to update account setting', 'danger')
+            return render_template('users/edit.html', user=user)
+    else:
+        flash(f"Not allowed to change {user.username}'s account setting", 'danger')
+        return render_template('users/edit.html', user=user)
+
 
 # follow user
 @users_blueprint.route('/follow/<username>', methods=["POST"])
 @login_required
 def follow(username):
     idol_id = request.form.get('idol_id')
-    f = Follower(fan=current_user.id, idol=idol_id)
+    f = Follow(fan=current_user.id, idol=idol_id)
     idol = User.get_by_id(idol_id)
     f.save()
     flash(f'You are now following {idol.username}', 'success')

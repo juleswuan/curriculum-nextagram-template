@@ -1,50 +1,10 @@
 {% extends '_layout.html' %} {% block content %}
 
-<!-- <h1>Upload Profile Image</h1>
-
-<img />
-
-<form
-  action="{{url_for('users.update_profile_img', id=current_user.id)}}"
-  method="POST"
-  enctype="multipart/form-data"
->
-  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-  <input type="file" name="user_file" />
-  <br />
-  <button type="submit">Upload</button>
-</form> -->
-
-<!-- <h1>Update Profile</h1>
-
-<form action="{{ url_for('users.update', id=user.id) }}" method="POST">
-  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-  <label for="name">Username</label>
-  <input
-    type="text"
-    name="username"
-    placeholder=""
-    value="{{ user.username }}"
-  />
-  <label for="email">Email</label>
-  <input
-    type="text"
-    name="email"
-    placeholder="Example: email@email.com"
-    value="{{ user.email }}"
-  />
-  <label for="password">Password</label>
-  <input type="text" name="password" placeholder="Min. 8 characters" />
-  <input type="submit" value="Update" />
-</form> -->
-
 <div class="container login-container">
   <div class="row">
     <div class="col-md-6 login-form-1">
       <h3>Upload Profile Image</h3>
       <br />
-      <!-- <div style="width: 300px; height: 100px; border: 1px solid black"></div>
-      <br /> -->
       <form
         action="{{url_for('users.update_profile_img', id=current_user.id)}}"
         method="POST"
@@ -60,40 +20,51 @@
     <div class="col-md-6 login-form-2">
       <h3>Update My Details</h3>
       <br />
+      <form
+        action="{{ url_for('users.make_private', id=current_user.id) }}"
+        method="POST"
+      >
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">
+            Make My Account Private
+          </button>
+        </div>
+      </form>
       <form action="{{ url_for('users.update', id=user.id) }}" method="POST">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
         <div class="form-group">
           <label for="name">Username</label>
           <input
             type="text"
+            name="username"
             class="form-control"
             placeholder=""
             value="{{ user.username }}"
           />
         </div>
         <div class="form-group">
-          <label for="name">Email</label>
+          <label for="email">Email</label>
           <input
             type="text"
             class="form-control"
+            name="email"
             placeholder=""
             value="{{ user.email }}"
           />
         </div>
         <div class="form-group">
-          <label for="name">Password</label>
+          <label for="password">Password</label>
           <input
             type="text"
             class="form-control"
+            name="password"
             placeholder=""
             value="Min. 8 characters"
           />
         </div>
         <div class="form-group">
           <button type="submit" class="btn btn-primary">Update</button>
-        </div>
-        <div class="form-group">
-          <a href="#" class="ForgetPwd" value="Login">Forget Password?</a>
         </div>
       </form>
     </div>

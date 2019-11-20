@@ -13,6 +13,7 @@ class User(UserMixin, BaseModel):
     email = pw.CharField(null=False, unique=True)
     password = pw.CharField(null=False)
     profile_image = pw.TextField(default="placeholder_icon.png")
+    is_private = pw.BooleanField(default=False)
 
     def is_authenticated(self):
         return True
@@ -42,10 +43,11 @@ class User(UserMixin, BaseModel):
         # check password constraints
         # if not re.match(r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" , self.password):
         #     self.errors.append('Password must be min. 8 chars, and contain min. one letter, one number and one special character')
-        if len(self.password) < 8 or len(self.password) > 20:
-            self.errors.append('Password must be between 8-20 chars')
-        else:
-            self.password = generate_password_hash(self.password)
+        if not duplicate_username == self:
+            if len(self.password) < 8 or len(self.password) > 20:
+                self.errors.append('Password must be between 8-20 chars')
+            else:
+                self.password = generate_password_hash(self.password)
 
 
     # add hybrid_property func decorator
